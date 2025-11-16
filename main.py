@@ -1,10 +1,10 @@
 from aiogram import Bot, Dispatcher, Router, F
 from aiogram.client.default import DefaultBotProperties
-from aiogram.enums import ParseMode
+from aiogram.enums import ContentType, ParseMode
 from aiogram.filters import CommandStart
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.storage.memory import MemoryStorage
-from aiogram_dialog.widgets.input import TextInput, ManagedTextInput
+from aiogram_dialog.widgets.input import TextInput, ManagedTextInput, MessageInput
 from environs import Env
 from aiogram.fsm.state import State, StatesGroup
 from aiogram_dialog.widgets.kbd import Button, Row, Column, Url, Select, Group, Back, Next, Cancel, Start, SwitchTo
@@ -73,6 +73,30 @@ async def category_selection(callback: CallbackQuery, widget, dialog_manager: Di
             await dialog_manager.switch_to(state=StartSG.mileage)
 
 
+# Отправка не текста
+async def no_text(message: Message, widget: MessageInput, dialog_manager: DialogManager):
+    dialog_manager.dialog_data['item'] = 'Новая покупка'
+    expenses.update(dialog_manager.dialog_data)
+    print(expenses)
+    await dialog_manager.switch_to(state=StartSG.mileage)
+    await message.send_copy(chat_id=CHAT_ID)
+
+
+# Отправка текста, где он не предполагается
+def not_text(text):
+    if isinstance(text, str):
+        return text
+    raise ValueError
+
+
+async def not_text_answer(message: Message, callback: CallbackQuery, widget: TextInput, dialog_manager: DialogManager):
+    await message.answer('Здесь не предполагается ввод текста')
+
+
+async def not_text_answer_other(message: Message, widget: MessageInput, dialog_manager: DialogManager):
+    await message.answer('В данном окне не предполагается отправка данного типа сообщения')
+
+
 # Ввод покупки в Прочее
 def add_text_other(text):
     if isinstance(text, str):
@@ -94,7 +118,7 @@ async def error_text_other(callback: CallbackQuery, widget: ManagedTextInput, di
 
 # Ввод Пробега и Расхода
 def add_text_mileage(text):
-    if all(ch.isdigit() for ch in text) and 5 <= len(text) <= 6:
+    if all(ch.isdigit() for ch in text) and 1 <= len(text) <= 6:
         return text
     raise ValueError
 
@@ -106,8 +130,9 @@ async def correct_text_mileage(callback: CallbackQuery, widget: TextInput, dialo
     await dialog_manager.switch_to(state=StartSG.expense)
 
 
-async def error_text_mileage(callback: CallbackQuery, widget: ManagedTextInput, dialog_manager: DialogManager,
+async def error_text_mileage(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager,
                              error: ValueError):
+    await message.answer('Введите число')
     await dialog_manager.switch_to(state=StartSG.mileage)
 
 
@@ -134,8 +159,9 @@ async def correct_text_expense(callback: CallbackQuery, widget: TextInput, dialo
     await dialog_manager.switch_to(state=StartSG.choice_date)
 
 
-async def error_text_expense(callback: CallbackQuery, widget: ManagedTextInput, dialog_manager: DialogManager,
+async def error_text_expense(message: Message, widget: ManagedTextInput, dialog_manager: DialogManager,
                              error: ValueError):
+    await message.answer('Введите число')
     await dialog_manager.switch_to(state=StartSG.expense)
 
 
@@ -200,6 +226,8 @@ start_dialog = Dialog(
             Next(Const('✅ Внести'), id='yes'),
             Back(Const('❎ Отложить'), id='no'),
         ),
+        TextInput(id='not_text', type_factory=not_text, on_success=not_text_answer),
+        MessageInput(func=not_text_answer_other, content_types=ContentType.ANY),
         getter=username_getter,
         state=StartSG.start,
     ),
@@ -218,6 +246,8 @@ start_dialog = Dialog(
             width=3
         ),
         Back(Const('◀️ Назад'), id='b_back'),
+        TextInput(id='not_text', type_factory=not_text, on_success=not_text_answer),
+        MessageInput(func=not_text_answer_other, content_types=ContentType.ANY),
         state=StartSG.category,
         getter=category_getter,
     ),
@@ -226,6 +256,7 @@ start_dialog = Dialog(
     Window(
         Const('Укажите какая была совершена <b>покупка 🛒</b>'),
         TextInput(id='other', type_factory=add_text_other, on_success=correct_text_other, on_error=error_text_other),
+        MessageInput(func=no_text, content_types=ContentType.ANY),
         SwitchTo(Const('◀️ Назад'), id='b_back', state=StartSG.category),
         state=StartSG.other_selected,
     ),
@@ -235,6 +266,7 @@ start_dialog = Dialog(
         Const('Укажите текущий <b>пробег 🔢</b> автомобиля'),
         TextInput(id='mileage', type_factory=add_text_mileage, on_success=correct_text_mileage,
                   on_error=error_text_mileage),
+        MessageInput(func=not_text_answer_other, content_types=ContentType.ANY),
         SwitchTo(Const('Пропустить ▶️'), id='skip', state=StartSG.expense, on_click=skip_mileage),
         SwitchTo(Const('◀️ Назад'), id='b_back', state=StartSG.category),
         state=StartSG.mileage,
@@ -245,6 +277,7 @@ start_dialog = Dialog(
         Const('Укажите <b>стоимость 💸</b> в рублях'),
         TextInput(id='expense', type_factory=add_text_expense, on_success=correct_text_expense,
                   on_error=error_text_expense),
+        MessageInput(func=not_text_answer_other, content_types=ContentType.ANY),
         SwitchTo(Const('◀️ Назад'), id='b_back', state=StartSG.mileage),
         state=StartSG.expense,
     ),
@@ -262,6 +295,8 @@ start_dialog = Dialog(
         SwitchTo(Const('📆 Выбрать дату'), id='choice_date', state=StartSG.calendar),
         SwitchTo(Const('◀️ Назад'), id='b_back', state=StartSG.expense),
         SwitchTo(Const('❎ Отменить'), id='cancel', state=StartSG.no_click),
+        TextInput(id='not_text', type_factory=not_text, on_success=not_text_answer),
+        MessageInput(func=not_text_answer_other, content_types=ContentType.ANY),
         state=StartSG.choice_date
     ),
 
@@ -271,6 +306,8 @@ start_dialog = Dialog(
         Calendar(id='calendar', on_click=calendar),
         SwitchTo(Const('◀️ Назад'), id='b_back', state=StartSG.choice_date),
         SwitchTo(Const('❎ Отменить'), id='cancel', state=StartSG.no_click),
+        TextInput(id='not_text', type_factory=not_text, on_success=not_text_answer),
+        MessageInput(func=not_text_answer_other, content_types=ContentType.ANY),
         state=StartSG.calendar
     ),
 
@@ -287,6 +324,8 @@ start_dialog = Dialog(
             SwitchTo(Const('🔄 Изменить'), id='change', state=StartSG.choice_change),
             SwitchTo(Const('❎ Отменить'), id='cancel', state=StartSG.no_click),
         ),
+        TextInput(id='not_text', type_factory=not_text, on_success=not_text_answer),
+        MessageInput(func=not_text_answer_other, content_types=ContentType.ANY),
         getter=result_getter,
         state=StartSG.result
     ),
@@ -295,6 +334,8 @@ start_dialog = Dialog(
     Window(
         Const('<b>Ваш расход сформирован</b>'),
         SwitchTo(Const('✅ Создать новый расход'), id='new_expense', state=StartSG.category),
+        TextInput(id='not_text', type_factory=not_text, on_success=not_text_answer),
+        MessageInput(func=not_text_answer_other, content_types=ContentType.ANY),
         state=StartSG.send_message
     ),
 
@@ -311,6 +352,8 @@ start_dialog = Dialog(
             width=2,
         ),
         SwitchTo(Const('◀️ Назад'), id='b_back', state=StartSG.result),
+        TextInput(id='not_text', type_factory=not_text, on_success=not_text_answer),
+        MessageInput(func=not_text_answer_other, content_types=ContentType.ANY),
         state=StartSG.choice_change
     ),
 )
