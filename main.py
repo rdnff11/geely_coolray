@@ -15,7 +15,7 @@ from datetime import date
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message, User
 from aiogram_dialog import Dialog, DialogManager, StartMode, Window, setup_dialogs
-from flask import Flask, render_template
+
 
 env = Env()
 env.read_env()
@@ -374,18 +374,6 @@ start_dialog = Dialog(
 async def command_start_process(message: Message, dialog_manager: DialogManager):
     await dialog_manager.start(state=StartSG.start, mode=StartMode.RESET_STACK)
     await message.delete()
-
-
-app = Flask(__name__, template_folder='.')
-
-
-@app.route("/")
-def web():
-    return render_template('index.html')
-
-
-if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port='80')
 
 
 dp.include_router(router)
