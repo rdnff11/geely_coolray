@@ -1,0 +1,24 @@
+{% extends "geely/base.html" %}
+{% load static %}
+{% block header %}
+<table>
+    <tr>
+        <td><a href="{{ geely.get_absolute_url }}"><img src="{% static 'img/geely.png' %}" alt="photo" width="150"></a>
+        </td>
+        <td style="font-size: 50px; color: #fff1c5; text-shadow: 0 0 25px blue">РАСХОДЫ GEELY COOLRAY</td>
+    </tr>
+</table>
+{% endblock %}
+{% block sider %}
+<div class="grid-categories">
+    {% for category in categories %}
+    <a href="{% url 'geely:cat_detail' category.slug %}">
+        <div class="grid-item">
+            {{ category.name }}
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}
+</body>
+</html>
