@@ -157,9 +157,23 @@ input:hover {
     background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
 }
 
+input[name="mileage"]:hover::placeholder {
+    color: #ffc900;
+}
+
+input[name="mileage"]:focus::placeholder {
+    color: #ffc900;
+}
+
+input[name="mileage"]:active::placeholder {
+    color: #ffc900;
+}
+
 input[type="submit"] {
     width: 370px;
     height: 75px;
+    text-align: center;
+    cursor: pointer;
 }
 
 input[type="submit"]:hover {
@@ -173,3 +187,27 @@ input[type="submit"]:active {
     box-shadow: 0 0 15px rgb(255, 241, 197);
     background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
 }
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1)
+}
+
+input[type="submit-home"] {
+    width: 375px;
+    height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+
+input[type="submit-home"]:hover {
+    color: #ffc900;
+    box-shadow: 0 0 15px rgb(255, 241, 197);
+    background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
+}
+
+input[type="submit-home"]:active {
+    color: #ffc900;
+    box-shadow: 0 0 15px rgb(255, 241, 197);
+    background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
+}
+
