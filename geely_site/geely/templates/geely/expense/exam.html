@@ -1,0 +1,21 @@
+{% extends "geely/base.html" %}
+{% load static %}
+{% block header %}
+<table>
+    <tr>
+        <td><a href="{% url 'geely:cat_list' %}"><img src="{% static 'img/geely.png' %}" alt="photo" width="150"></a>
+        </td>
+        <td style="font-size: 50px; color: #fff1c5; text-shadow: 0 0 25px blue">
+            {{ category.name }}</td>
+    </tr>
+</table>
+{% endblock %}
+{% block sider %}
+<h1>ПОДТВЕРДИТЕ РАСХОД</h1>
+<form action="{{ geely.get_absolute_url }}" method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <p><input type="submit" value="ПОДТВЕРДИТЬ">
+    </p>
+</form>
+{% endblock %}
