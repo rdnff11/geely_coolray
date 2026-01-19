@@ -25,8 +25,8 @@ class Category(models.Model):
 class Expense(models.Model):
     category = models.ForeignKey(Category, related_name='expenses', on_delete=models.CASCADE, verbose_name='КАТЕГОРИЯ', null=True, blank=True)
     date = models.DateField(default=timezone.now, verbose_name='ДАТА')
-    mileage = models.CharField(verbose_name='ПРОБЕГ', default='НЕ УКАЗАН', blank=True)
-    price = models.IntegerField(verbose_name='СТОИМОСТЬ', null=True)
+    mileage = models.CharField(default='НЕ УКАЗАН', verbose_name='ПРОБЕГ', null=True, blank=True)
+    price = models.CharField(verbose_name='СТОИМОСТЬ', null=True)
 
     class Meta:
         ordering = ['-date']
