@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}Расходы GEELY COOLRAY{% endblock %}</title>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+{% block header %}
+{% endblock %}
+{% block datetime %}
+<p id="time"></p>
+<script>
+    function showDateTime() {
+        const now = new Date();
+        const formattedDateTime = now.toLocaleString('ru-RU', {hour: '2-digit', minute: '2-digit'});
+        document.getElementById('time').textContent = formattedDateTime;
+    }
+
+    showDateTime();
+    setInterval(showDateTime, 1000);
+</script>
+<p id="date"></p>
+<script>
+    function showDateTime() {
+        const now = new Date();
+        const formattedDateTime = now.toLocaleString('ru-RU', {year: 'numeric', month: '2-digit', day: '2-digit'});
+        const days = [' – ВОСКРЕСЕНЬЕ', ' – ПОНЕДЕЛЬНИК', ' – ВТОРНИК', ' – СРЕДА', ' – ЧЕТВЕРГ', ' – ПЯТНИЦА', ' – СУББОТА'];
+        const dayIndex = now.getDay();
+        const dayName = days[dayIndex];
+        document.getElementById('date').textContent = formattedDateTime + ' ' + dayName;
+    }
+
+    showDateTime();
+    setInterval(showDateTime, 1000);
+</script>
+{% endblock %}
+{% block sider %}
+{% endblock %}
+{% block footer %}
+<div class="footer">В случае возникновения вопросов - <a href="https://t.me/rdnff11"><u>обратная связь</u></a></div>
+{% endblock %}
+</body>
+</html>

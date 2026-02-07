@@ -1,0 +1,26 @@
+{% extends "geely/base.html" %}
+{% load static %}
+{% block header %}
+<table>
+    <tr>
+        <td><a href="{% url 'geely:cat_list' %}"><img src="{% static 'img/geely.png' %}" alt="photo" width="150"></a>
+        </td>
+        <td style="font-size: 50px; color: #fff1c5; text-shadow: 0 0 25px blue">
+            {{ category.name }}</td>
+    </tr>
+</table>
+{% endblock %}
+{% block sider %}
+<h1>НОВЫЙ РАСХОД ДОБАВЛЕН</h1>
+<a href="{% url 'geely:cat_list' %}"><input type="submit" value="НА ГЛАВНУЮ"></a>
+<h1>ДОБАВИТЬ ЕЩЕ РАСХОД?</h1>
+<div class="grid-categories">
+    {% for category in categories %}
+    <a href="{% url 'geely:cat_detail' category.slug %}">
+        <div class="grid-item">
+            {{ category.name }}
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

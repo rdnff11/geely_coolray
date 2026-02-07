@@ -1,0 +1,229 @@
+@font-face {
+    font-family: 'MyFont';
+    src: url('../font/agencyfbcyrillic.ttf') format('truetype');
+}
+
+html, body {
+    font-family: 'MyFont';
+    color: #fff0a7;
+    padding: 0;
+    height: auto;
+    width: auto;
+    background: linear-gradient(135deg, rgb(0, 128, 255), rgb(191, 26, 26));
+}
+
+a {
+    color: #fff1c5;
+    text-decoration: none;
+}
+
+h1 {
+    color: #fff1c5;
+    margin: 10px;
+    text-shadow: 0 0 25px blue;
+    font-size: 42px;
+}
+
+a:hover {
+    color: #ffc900;
+}
+
+#time {
+    margin: 15px 10px 25px 10px;
+    font-size: 70px;
+    color: #fff1c5;
+    text-shadow: 0 0 25px blue;
+}
+
+#date {
+    margin: 25px 10px 25px 10px;
+    font-size: 35px;
+    color: #fff1c5;
+    text-shadow: 0 0 25px blue;
+}
+
+li {
+    background: #008cff;
+    color: rgba(0, 0, 0, 0);
+    border: solid;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 25px;
+    padding: 20px 20px;
+    margin: 20px 0;
+}
+
+.grid-categories {
+    margin: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    width: 60%;
+}
+
+.grid-item {
+    font-size: 30px;
+    padding: 15px;
+    border-radius: 15px;
+    background: rgba(0, 119, 204, 0);
+    border: 2px solid #fff1c5;
+    box-shadow: 0 0 15px blue;
+    text-align: center;
+}
+
+
+.grid-item:hover {
+    font-size: 32px;
+    padding: 13px;
+    border: 2px solid #fff1c5;
+    box-shadow: 0 0 15px rgb(255, 241, 197);
+    background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
+}
+
+.grid-item:focus {
+    font-size: 32px;
+    padding: 14px;
+    border: 2px solid #fff1c5;
+    box-shadow: 0 0 15px rgb(255, 241, 197);
+    background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
+}
+
+label {
+    font-size: 25px;
+    color: #fff1c5;
+    border: 2px solid #fff1c5;
+    box-shadow: 0 0 10px blue;
+    border-radius: 15px;
+    padding: 10px;
+    margin: 10px;
+    display: inline-block;
+    width: 150px;
+}
+
+
+select {
+    font-family: 'MyFont';
+    border: 2px solid #fff1c5;
+    border-radius: 15px;
+    box-shadow: 0 0 10px blue;
+    background: rgba(0, 0, 0, 0);
+    font-size: 25px;
+    color: #fff1c5;
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+    width: 170px;
+}
+
+select:focus {
+    color: #ffc900;
+    box-shadow: 0 0 15px rgb(255, 241, 197);
+    background: linear-gradient(135deg, rgb(0, 128, 255), rgb(191, 26, 26))
+}
+
+option {
+    color: #fff1c5;
+    background: rgba(60, 22, 166, 0.8);
+}
+
+input {
+    font-family: 'MyFont';
+    border: 2px solid #fff1c5;
+    border-radius: 15px;
+    box-shadow: 0 0 10px blue;
+    background: rgba(0, 0, 0, 0);
+    font-size: 25px;
+    color: #fff1c5;
+    margin: 10px;
+    padding: 10px;
+    display: inline-block;
+    width: 150px;
+}
+
+input:focus {
+    color: #ffc900;
+    box-shadow: 0 0 15px rgb(255, 241, 197);
+    background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
+}
+
+input:active {
+    color: #ffc900;
+    box-shadow: 0 0 15px rgb(255, 241, 197);
+    background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
+}
+
+input:hover {
+    color: #ffc900;
+    box-shadow: 0 0 15px rgb(255, 241, 197);
+    background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
+}
+
+input[name="mileage"]:hover::placeholder {
+    color: #ffc900;
+}
+
+input[name="mileage"]:focus::placeholder {
+    color: #ffc900;
+}
+
+input[name="mileage"]:active::placeholder {
+    color: #ffc900;
+}
+
+input[type="submit"] {
+    width: 370px;
+    height: 75px;
+    text-align: center;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    color: #ffc900;
+    box-shadow: 0 0 15px rgb(255, 241, 197);
+    background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
+}
+
+input[type="submit"]:active {
+    color: #ffc900;
+    box-shadow: 0 0 15px rgb(255, 241, 197);
+    background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
+}
+
+::-webkit-calendar-picker-indicator {
+    filter: invert(1)
+}
+
+input[type="submit-home"] {
+    width: 375px;
+    height: 50px;
+    text-align: center;
+    cursor: pointer;
+}
+
+input[type="submit-home"]:hover {
+    color: #ffc900;
+    box-shadow: 0 0 15px rgb(255, 241, 197);
+    background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
+}
+
+input[type="submit-home"]:active {
+    color: #ffc900;
+    box-shadow: 0 0 15px rgb(255, 241, 197);
+    background: linear-gradient(135deg, rgba(0, 128, 255, 0.5), rgba(191, 26, 26, 0.5));
+}
+
+.footer {
+    border-top: 2px solid rgba(255, 240, 167, 0.25);
+    width: 40%;
+    margin: 50px 10px;
+    font-size: 20px;
+    color: rgba(255, 240, 167, 0.25);
+}
+
+.footer a {
+    color: rgba(255, 240, 167, 0.25);
+}
+
+.footer a:hover {
+    color: rgb(255, 240, 167);
+}
